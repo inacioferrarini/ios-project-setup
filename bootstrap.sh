@@ -169,6 +169,7 @@ fi
 export PROJECT_NAME=`basename "$PWD"`
 
 if [ ! -f .slather.yml ]; then
+export TESTS_FOLDER=$PROJECT_NAME'Tests'
 echo "
 workspace: $PROJECT_NAME.xcworkspace
 xcodeproj: $PROJECT_NAME.xcodeproj
@@ -178,6 +179,6 @@ source_directory: $PROJECT_NAME
 coverage_service: html
 ignore:
   - Pods/*
-  - $PROJECT_NAMETests /*
+  - $TESTS_FOLDER/*
 " >>  .slather.yml
 fi
