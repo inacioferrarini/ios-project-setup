@@ -58,7 +58,9 @@ fi
 
 bundle install
 
+if [ ! -f Podfile ]; then
 bundle exec pod init
+fi
 
 if [ ! -f Rakefile ]; then
 echo "
