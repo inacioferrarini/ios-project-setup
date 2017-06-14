@@ -4,6 +4,10 @@ echo 'Execute this script inside a Xcode project folder.'
 
 # Variables
 export RUBY_ENV='RBENV'
+export PROJECT_NAME=`basename "$PWD"`
+export WORKSPACE_NAME=`basename "$PWD"`
+export TEST_SCHEMA_NAME=`basename "$PWD"`
+export TESTS_TARGET=$PROJECT_NAME'Tests'
 
 # Functions
 
@@ -66,7 +70,24 @@ end
 desc \"Executes pod update and fix files messed up by Cocoapods.\"
 task :update do
 sh \"bundle exec pod update\"
-end" >> Rakefile
+end
+
+desc \"Generates Slather Code Coverage Report.\"
+task :slather do
+#task :slather do
+sh \"rm -rf ~/Library/Developer/Xcode/DerivedData/*\"
+sh \"rm -rf ~/Library/Developer/CoreSimulator/*\"
+sh \"rm -rf slather-report\"
+sh \"xcodebuild clean build -workspace $WORKSPACE_NAME.xcworkspace -scheme $TEST_SCHEMA_NAME -destination 'platform=iOS Simulator,name=iPhone 5s,OS=9.3' VALID_ARCHS=x86_64 test | xcpretty\"
+sh \"bundle exec slather > /dev/null\"
+sh \"open slather-report/index.html > /dev/null\"
+end
+
+desc \"Generates Code Style Report.\"
+task :oclint do
+sh \"echo oclint ... \"
+end
+" >> Rakefile
 fi
 
 rake install
@@ -166,10 +187,7 @@ UseTab:          Never
 " >> .clang-format
 fi
 
-export PROJECT_NAME=`basename "$PWD"`
-
 if [ ! -f .slather.yml ]; then
-export TESTS_FOLDER=$PROJECT_NAME'Tests'
 echo "
 workspace: $PROJECT_NAME.xcworkspace
 xcodeproj: $PROJECT_NAME.xcodeproj
@@ -179,6 +197,6 @@ source_directory: $PROJECT_NAME
 coverage_service: html
 ignore:
   - Pods/*
-  - $TESTS_FOLDER/*
+  - $TESTS_TARGET/*
 " >>  .slather.yml
 fi
