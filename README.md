@@ -10,7 +10,7 @@ This script will execute basic setup creating some configuration files, but will
 
 Created files will assure that target names, directory references and so matches the project's files, targets and directory names.
 
-Setps:
+Steps:
 
 1. Setup rbenv or RVM. If neither is configured, configures rbenv.
 2. Installs Bundler
