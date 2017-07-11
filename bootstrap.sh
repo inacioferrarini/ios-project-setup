@@ -76,10 +76,13 @@ end
 
 desc \"Generates Slather Code Coverage Report.\"
 task :slather do
+sh \"killall -9 'Simulator' || true\"
+sh \"killall -9 'iOS Simulator' || true\"
+sh \"killall -9 com.apple.CoreSimulator.CoreSimulatorService || true\"
 sh \"rm -rf ~/Library/Developer/Xcode/DerivedData/* || true\"
 sh \"rm -rf ~/Library/Developer/CoreSimulator/* || true\"
 sh \"rm -rf slather-report || true\"
-sh \"xcodebuild clean build -workspace $WORKSPACE_NAME.xcworkspace -scheme $TEST_SCHEMA_NAME -destination 'platform=iOS Simulator,name=iPhone 5s,OS=9.3' VALID_ARCHS=x86_64 test | xcpretty\"
+sh \"xcodebuild clean build -workspace $WORKSPACE_NAME.xcworkspace -scheme $TEST_SCHEMA_NAME -destination 'platform=iOS Simulator,name=iPhone 5s' VALID_ARCHS=x86_64 test | xcpretty\"
 sh \"bundle exec slather > /dev/null\"
 sh \"open slather-report/index.html > /dev/null\"
 end
