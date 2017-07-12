@@ -8,20 +8,21 @@ export PROJECT_NAME=`basename "$PWD"`
 export WORKSPACE_NAME=`basename "$PWD"`
 export TEST_SCHEMA_NAME=`basename "$PWD"`
 export TESTS_TARGET=$PROJECT_NAME'Tests'
+export RUBY_VERSION=2.3.3
 
 # Functions
 
 function setup_rbenv {
     echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile
     source ~/.bash_profile
-    rbenv install 2.3.1
-    rbenv global 2.3.1
-    rbenv local 2.3.1    
+    rbenv install $RUBY_VERSION
+    rbenv global $RUBY_VERSION
+    rbenv local $RUBY_VERSION    
 }
 
 function setup_rvm {
-    rvm install 2.3.1
-    rvm local 2.3.1
+    rvm install $RUBY_VERSION
+    rvm local $RUBY_VERSION
 }
 
 function install_rbenv {
@@ -49,7 +50,7 @@ gem install bundler
 if [ ! -f Gemfile ]; then
 echo "source \"https://rubygems.org\"
 
-ruby '2.3.1'
+ruby '$RUBY_VERSION'
 gem 'cocoapods', '1.0.1'
 gem 'slather'
 gem 'rake'
