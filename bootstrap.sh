@@ -90,6 +90,13 @@ sh \"bundle exec slather > /dev/null\"
 sh \"open slather-report/index.html > /dev/null\"
 end
 
+desc \"Generates Jazzy Report.\"
+task :docs do
+@version = `cat $WORKSPACE_NAME.podspec | grep 's.version' | head -n1 | grep -o '[0-9][0-9.]*[0-9]'`
+sh \"jazzy --podspec $WORKSPACE_NAME.podspec --swift-version 3.1 --author <Author> --github_url <github url> --download-badge --output docs/latest\"
+sh \"cp -rf docs/latest docs/#{@version}\"
+end
+
 desc \"Generates Code Style Report.\"
 task :oclint do
 sh \"echo oclint ... \"
