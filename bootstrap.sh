@@ -92,9 +92,12 @@ end
 
 desc \"Generates Jazzy Report.\"
 task :docs do
-@version = `cat $WORKSPACE_NAME.podspec | grep 's.version' | head -n1 | grep -o '[0-9][0-9.]*[0-9]'`
-sh \"jazzy --podspec $WORKSPACE_NAME.podspec --swift-version 3.1 --author <Author> --github_url <github url> --download-badge --output docs/latest\"
-sh \"cp -rf docs/latest docs/#{@version}\"
+#   If you have a .podspec file, uncomment this
+#@version = `cat $WORKSPACE_NAME.podspec | grep 's.version' | head -n1 | grep -o '[0-9][0-9.]*[0-9]'`
+#sh \"jazzy --podspec $WORKSPACE_NAME.podspec --swift-version 3.1 --author <Author> --github_url <github url> --download-badge --output docs/latest\"
+#sh \"cp -rf docs/latest docs/#{@version}\"
+#   Else, if you do not have a .podspec file, uncomment this
+sh \"jazzy --swift-version 3.1 --author 'Author' --github_url 'www.github.com' --download-badge\"
 end
 
 desc \"Generates Code Style Report.\"
